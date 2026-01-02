@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://playbook-mfft.onrender.com"
+      "destination": "https://playbook-mfft.onrender.com/api/$1"
     },
     {
       "source": "/static/(.*)",
-      "destination": "https://playbook-mfft.onrender.com"
+      "destination": "https://playbook-mfft.onrender.com/static/$1"
     }
   ]
 }
