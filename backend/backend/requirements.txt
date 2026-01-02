@@ -4,8 +4,7 @@
 # PDF Processing (using binary wheels for Windows compatibility)
 # PyMuPDF newer versions support Python 3.13
 PyMuPDF>=1.24.10  # Will auto-install from binary wheel
-Pillow==10.1.0
-# Pillow 12.x supports Python 3.13 wheels
+# Pillow 11+ has Python 3.13 wheels on Linux (Render)
 Pillow>=11.0.0
 reportlab==4.0.7
 
