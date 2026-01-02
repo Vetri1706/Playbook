@@ -1,0 +1,50 @@
+<!-- Page 4 -->
+<div class="page" id="page-4">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_04.png') }}" alt="Page 4 Background">
+    </div>
+    <div class="page-content">
+        <!-- empathy_who -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_who %}missing-data{% endif %}"
+             data-field-name="empathy_who"
+             style="top: 2.78in; left: 0.69in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_who or '[Not provided]' }}
+        </div>
+
+        <!-- empathy_what -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_what %}missing-data{% endif %}"
+             data-field-name="empathy_what"
+             style="top: 2.78in; left: 4.31in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_what or '[Not provided]' }}
+        </div>
+
+        <!-- empathy_when -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_when %}missing-data{% endif %}"
+             data-field-name="empathy_when"
+             style="top: 4.17in; left: 0.69in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_when or '[Not provided]' }}
+        </div>
+
+        <!-- empathy_where -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_where %}missing-data{% endif %}"
+             data-field-name="empathy_where"
+             style="top: 4.17in; left: 4.31in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_where or '[Not provided]' }}
+        </div>
+
+        <!-- empathy_how -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_how %}missing-data{% endif %}"
+             data-field-name="empathy_how"
+             style="top: 5.56in; left: 0.69in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_how or '[Not provided]' }}
+        </div>
+
+        <!-- empathy_why -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.empathy_why %}missing-data{% endif %}"
+             data-field-name="empathy_why"
+             style="top: 5.56in; left: 4.31in; width: 3.33in; height: 1.11in; line-height: 1.4;">
+            {{ data.empathy_why or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Design Thinking Playbook - {{ project_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pdf_template.css') }}">
+</head>
+<body>
+    {% include 'pdf/pages/page_01_cover.html' %}
+    {% include 'pdf/pages/page_02_welcome.html' %}
+    {% include 'pdf/pages/page_03_problem.html' %}
+    {% include 'pdf/pages/page_04_empathize.html' %}
+    {% include 'pdf/pages/page_05_user_profile.html' %}
+    {% include 'pdf/pages/page_06_sad_happy.html' %}
+    {% include 'pdf/pages/page_07_product_statement.html' %}
+    {% include 'pdf/pages/page_08_ideas.html' %}
+    {% include 'pdf/pages/page_09_validation.html' %}
+    {% include 'pdf/pages/page_10_prototype.html' %}
+    {% include 'pdf/pages/page_11_innovation_stack.html' %}
+    {% include 'pdf/pages/page_12_final_message.html' %}
+</body>
+</html>

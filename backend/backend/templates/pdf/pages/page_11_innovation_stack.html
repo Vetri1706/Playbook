@@ -1,0 +1,43 @@
+<!-- Page 11 -->
+<div class="page" id="page-11">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_11.png') }}" alt="Page 11 Background">
+    </div>
+    <div class="page-content">
+        <!-- innovation_layer_1 -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.innovation_layer_1 %}missing-data{% endif %}"
+             data-field-name="innovation_layer_1"
+             style="top: 2.78in; left: 2.08in; width: 4.17in; height: 0.56in;">
+            {{ data.innovation_layer_1 or '[Not provided]' }}
+        </div>
+
+        <!-- innovation_layer_2 -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.innovation_layer_2 %}missing-data{% endif %}"
+             data-field-name="innovation_layer_2"
+             style="top: 3.47in; left: 2.08in; width: 4.17in; height: 0.56in;">
+            {{ data.innovation_layer_2 or '[Not provided]' }}
+        </div>
+
+        <!-- innovation_layer_3 -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.innovation_layer_3 %}missing-data{% endif %}"
+             data-field-name="innovation_layer_3"
+             style="top: 4.17in; left: 2.08in; width: 4.17in; height: 0.56in;">
+            {{ data.innovation_layer_3 or '[Not provided]' }}
+        </div>
+
+        <!-- innovation_layer_4 -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.innovation_layer_4 %}missing-data{% endif %}"
+             data-field-name="innovation_layer_4"
+             style="top: 4.86in; left: 2.08in; width: 4.17in; height: 0.56in;">
+            {{ data.innovation_layer_4 or '[Not provided]' }}
+        </div>
+
+        <!-- innovation_layer_5 -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.innovation_layer_5 %}missing-data{% endif %}"
+             data-field-name="innovation_layer_5"
+             style="top: 5.56in; left: 2.08in; width: 4.17in; height: 0.56in;">
+            {{ data.innovation_layer_5 or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

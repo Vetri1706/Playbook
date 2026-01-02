@@ -1,0 +1,107 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Next.js dev server",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run Flask backend",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location \"d:\\appp\\backend\\backend\"; C:\\Users\\vetri\\AppData\\Local\\Programs\\Python\\Python313\\python.exe app.py"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Git: Commit and push to Vetri1706/Playbook",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location \"d:\\appp\"; git add -A; $branch = (git rev-parse --abbrev-ref HEAD).Trim(); if (-not $branch) { $branch = 'main' }; $repoUrl = 'https://github.com/Vetri1706/Playbook.git'; $origin = (git remote get-url origin 2>$null); if (-not $origin) { git remote add origin $repoUrl } else { git remote set-url origin $repoUrl }; $staged = (git diff --cached --name-only); if ($staged) { git commit -m \"Update backend PDF flow + deploy configs\" }; git push -u origin $branch"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Git: Status",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location \"d:\\appp\"; git status -sb; git diff --cached --name-only"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Git: Commit and push (fixed quoting)",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location \"d:\\appp\"; $repoUrl = 'https://github.com/Vetri1706/Playbook.git'; $origin = (git remote get-url origin 2>$null); if (-not $origin) { git remote add origin $repoUrl } else { git remote set-url origin $repoUrl }; $staged = (git diff --cached --name-only); if (-not $staged) { Write-Host 'No staged changes to commit.' } else { git commit -m 'Update backend PDF + Vercel/Render deploy setup' }; $branch = (git rev-parse --abbrev-ref HEAD).Trim(); if (-not $branch) { $branch = 'main' }; git push -u origin $branch"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Git: Commit using -F - and push",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location \"d:\\appp\"; $repoUrl = 'https://github.com/Vetri1706/Playbook.git'; $origin = (git remote get-url origin 2>$null); if (-not $origin) { git remote add origin $repoUrl } else { git remote set-url origin $repoUrl }; $staged = (git diff --cached --name-only); if (-not $staged) { Write-Host 'No staged changes to commit.' } else { 'Update backend PDF and deployment setup' | git commit -F - }; $branch = (git rev-parse --abbrev-ref HEAD).Trim(); if (-not $branch) { $branch = 'main' }; git push -u origin $branch"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Git: Commit (no spaces) and push",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location d:\\appp; git add -A; $repoUrl = https://github.com/Vetri1706/Playbook.git; $origin = (git remote get-url origin 2>$null); if (-not $origin) { git remote add origin $repoUrl } else { git remote set-url origin $repoUrl }; git diff --cached --quiet; if ($LASTEXITCODE -eq 1) { git commit -m Update_backend_PDF_and_deployment_setup } else { Write-Host Nothing_to_commit }; $branch = (git rev-parse --abbrev-ref HEAD).Trim(); if (-not $branch) { $branch = main }; git push -u origin $branch"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

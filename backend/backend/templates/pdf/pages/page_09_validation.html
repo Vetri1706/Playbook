@@ -1,0 +1,45 @@
+<!-- Page 9 -->
+<div class="page" id="page-9">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_09.png') }}" alt="Page 9 Background">
+    </div>
+    <div class="page-content">
+        <!-- selected_idea_name -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.selected_idea_name %}missing-data{% endif %}"
+             data-field-name="selected_idea_name"
+             style="top: 2.78in; left: 2.78in; width: 2.78in; height: 0.42in;">
+            {{ data.selected_idea_name or '[Not provided]' }}
+        </div>
+
+        <!-- selected_idea_drawing -->
+        <div class="image-block content-block {% if not images.selected_idea_drawing %}missing-data{% endif %}"
+             data-field-name="selected_idea_drawing"
+             style="top: 3.33in; left: 2.78in; width: 2.78in; height: 2.08in;">
+            {% if images.selected_idea_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.selected_idea_drawing) }}" alt="selected_idea_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- validation_scores table -->
+        <table class="table-block content-block {% if not data.validation_scores %}missing-data{% endif %}"
+               data-field-name="validation_scores"
+               style="top: 5.83in; left: 0.69in; width: 6.94in;">
+            {% if data.validation_scores %}
+            {% for row in data.validation_scores %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr><td class="placeholder">[Table Not Provided]</td></tr>
+            {% endif %}
+        </table>
+
+    </div>
+</div>

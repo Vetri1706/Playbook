@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Backend API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            margin: 10px 0;
+            padding: 10px 20px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Backend API Test</h1>
+
+    <div>
+        <button onclick="testHealth()">Test Health Endpoint</button>
+        <button onclick="testRegister()">Register Test User</button>
+        <button onclick="testLogin()">Test Login</button>
+        <button onclick="createProject()">Create Project</button>
+        <button onclick="saveSampleResponse()">Save Sample Response</button>
+        <button onclick="testGeneratePDF()">Test Generate PDF</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let authToken = null;
+        let projectId = null;
+
+        function log(message, isError = false) {
+            const output = document.getElementById('output');
+            const className = isError ? 'error' : 'success';
+            output.innerHTML += `<div class="${className}">${message}</div>`;
+        }
+
+        async function testHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                log('Health Check: ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                log('Health Check Failed: ' + error.message, true);
+            }
+        }
+
+        async function testRegister() {
+            try {
+                const unique = Math.floor(Math.random() * 1e6);
+                const username = 'testuser';
+                const email = `testuser${unique}@example.com`;
+                const password = 'password123';
+
+                const res = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || `HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                authToken = data.token;
+                log('Registered and logged in as: ' + data.user.username);
+            } catch (e) {
+                log('Register Failed: ' + e.message, true);
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'testuser',
+                        password: 'password123'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                authToken = data.token;
+                log('Login Success! Token: ' + authToken.substring(0, 20) + '...');
+                log('User: ' + JSON.stringify(data.user, null, 2));
+            } catch (error) {
+                log('Login Failed: ' + error.message, true);
+            }
+        }
+
+        async function createProject() {
+            if (!authToken) {
+                log('Please login first!', true);
+                return;
+            }
+            try {
+                const res = await fetch(`${API_URL}/create-project`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ title: 'Test Project' })
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || `HTTP ${res.status}`);
+                }
+                const data = await res.json();
+                projectId = data.project_id;
+                log('Project created. ID: ' + projectId);
+            } catch (e) {
+                log('Create project failed: ' + e.message, true);
+            }
+        }
+
+        async function saveSampleResponse() {
+            if (!authToken) {
+                log('Please login first!', true);
+                return;
+            }
+            if (!projectId) {
+                log('Please create a project first!', true);
+                return;
+            }
+            try {
+                const res = await fetch(`${API_URL}/save-response`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        project_id: projectId,
+                        field_name: 'problem_who_it_helps',
+                        field_value: 'This helps students learn faster.',
+                        page_number: 3
+                    })
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || `HTTP ${res.status}`);
+                }
+                const data = await res.json();
+                log('Sample response saved. ID: ' + data.response_id);
+            } catch (e) {
+                log('Save response failed: ' + e.message, true);
+            }
+        }
+
+        async function testGeneratePDF() {
+            if (!authToken) {
+                log('Please login first!', true);
+                return;
+            }
+            if (!projectId) {
+                log('Please create a project first!', true);
+                return;
+            }
+
+            try {
+                // Ensure we have at least one response saved
+                await saveSampleResponse();
+                const response = await fetch(`${API_URL}/generate-pdf`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        project_id: projectId
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || `HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                log('PDF Generated! ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                log('PDF Generation Failed: ' + error.message, true);
+            }
+        }
+    </script>
+</body>
+
+</html>

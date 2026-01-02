@@ -1,0 +1,14 @@
+# Backend Directory Structure
+generated_pdfs/
+uploads/
+*.db
+*.pyc
+__pycache__/
+*.log
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/

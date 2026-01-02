@@ -1,156 +1,174 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import PlaybookPage from '@/components/PlaybookPage';
-import PageHeader from '@/components/PageHeader';
-import PageFooter from '@/components/PageFooter';
-import DrawingBox from '@/components/DrawingBox';
+import PdfPage, { PdfBox, PdfInputField, PdfTextAreaField } from '@/components/PdfPage';
+import CanvasDrawing from '@/components/CanvasDrawing';
 import { usePlaybook } from '@/context/PlaybookContext';
-import { CHARACTERS } from '@/utils/constants';
+import AppShell from '@/components/app/AppShell';
+import TemplatePager from '@/components/app/TemplatePager';
 
 export default function Step3Page() {
-  const { step3, updateStep3 } = usePlaybook();
+  const { step3, updateStep3, updateStep3Data } = usePlaybook();
 
-  const handleIdeaChange = (index: number, mode: 'draw' | 'write', content: string) => {
-    const newIdeas = [...step3.ideas];
-    newIdeas[index] = { ...newIdeas[index], mode, content };
-    updateStep3(newIdeas);
+  const updateIdea = (index: number, patch: { mode?: 'draw' | 'write'; content?: string }) => {
+    const next = [...step3.ideas];
+    next[index] = { ...next[index], ...patch };
+    updateStep3(next);
+  };
+
+  const updateIdeaTitle = (index: number, title: string) => {
+    const next = [...step3.ideas];
+    next[index] = { ...next[index], title };
+    updateStep3(next);
   };
 
   return (
-    <PlaybookPage heroTheme={CHARACTERS.blackpanther.colors}>
-      {/* Dark vibrant background with neon accents */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-hero-panther/5 via-white to-hero-panther-purple/10" />
-        <motion.div 
-          className="absolute top-0 left-0 w-80 h-80 bg-hero-panther-purple/20 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute bottom-0 right-0 w-80 h-80 bg-hero-jerry/20 rounded-full blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2] }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-      </div>
-
-      <PageHeader
-        stepNumber={3}
+    <AppShell title="Step 3">
+      <TemplatePager
         title="Ideate"
-        subtitle="Crazy 6"
+        routePrev="/step2"
+        routeNext="/step4"
+        pages={[
+          {
+            key: 'p7',
+            label: 'Product statement',
+            content: (
+              <PdfPage pageNumber={7}>
+                {(() => {
+                  const lines = (step3.productStatement || '').split('\n');
+                  const getLine = (i: number) => (lines[i] ?? '').trimEnd();
+                  const setLine = (i: number, nextValue: string) => {
+                    const next = [...lines];
+                    while (next.length < 3) next.push('');
+                    next[i] = nextValue;
+                    updateStep3Data({ productStatement: next.slice(0, 3).join('\n') });
+                  };
+
+                  const barX = 225;
+                  const barW = 430;
+                  const barH = 46;
+                  const barYs = [210, 280, 350];
+
+                  return (
+                    <>
+                      <PdfInputField
+                        rect={{ x: barX, y: barYs[0], width: barW, height: barH }}
+                        value={getLine(0)}
+                        onChangeAction={(v) => setLine(0, v)}
+                        fontSize={14}
+                        padding={10}
+                      />
+                      <PdfInputField
+                        rect={{ x: barX, y: barYs[1], width: barW, height: barH }}
+                        value={getLine(1)}
+                        onChangeAction={(v) => setLine(1, v)}
+                        fontSize={14}
+                        padding={10}
+                      />
+                      <PdfInputField
+                        rect={{ x: barX, y: barYs[2], width: barW, height: barH }}
+                        value={getLine(2)}
+                        onChangeAction={(v) => setLine(2, v)}
+                        fontSize={14}
+                        padding={10}
+                      />
+                    </>
+                  );
+                })()}
+              </PdfPage>
+            ),
+          },
+          {
+            key: 'p8',
+            label: 'Crazy 6',
+            content: (
+              <PdfPage pageNumber={8}>
+                {(
+                  (() => {
+                    const X_OFF = -30;
+                    return (
+                  [
+                    {
+                      id: 1,
+                      draw: { x: 260 + X_OFF, y: 225, width: 130, height: 110 },
+                      title: { x: 260 + X_OFF, y: 340, width: 130, height: 18 },
+                      titleFontSize: 9,
+                    },
+                    {
+                      id: 2,
+                      draw: { x: 413 + X_OFF, y: 225, width: 130, height: 110 },
+                      title: { x: 413 + X_OFF, y: 340, width: 130, height: 18 },
+                      titleFontSize: 9,
+                    },
+                    {
+                      id: 3,
+                      draw: { x: 566 + X_OFF, y: 225, width: 130, height: 110 },
+                      title: { x: 566 + X_OFF, y: 340, width: 130, height: 18 },
+                      titleFontSize: 9,
+                    },
+                    {
+                      id: 4,
+                      draw: { x: 260 + X_OFF, y: 382, width: 130, height: 95 },
+                      title: { x: 260 + X_OFF, y: 480, width: 130, height: 16 },
+                      titleFontSize: 8,
+                    },
+                    {
+                      id: 5,
+                      draw: { x: 416 + X_OFF, y: 382, width: 130, height: 95 },
+                      title: { x: 416 + X_OFF, y: 480, width: 130, height: 16 },
+                      titleFontSize: 8,
+                    },
+                    {
+                      id: 6,
+                      draw: { x: 566 + X_OFF, y: 386, width: 130, height: 95 },
+                      title: { x: 566 + X_OFF, y: 480, width: 130, height: 16 },
+                      titleFontSize: 8,
+                    },
+                  ] as const
+                    );
+                  })()
+                ).map((slot) => {
+                  const index = slot.id - 1;
+                  const idea = step3.ideas[index];
+                  const drawing = idea.mode === 'draw' ? idea.content : '';
+                  const title = (idea.title ?? (idea.mode === 'write' ? idea.content : '')).trimEnd();
+
+                  // Use the exact calibrated rectangles from the PDF mapping (backend/pdf_mappings.py)
+                  // so the 6 drawing boxes align perfectly with the template.
+                  const drawRect = slot.draw;
+
+                  return (
+                    <React.Fragment key={slot.id}>
+                      <PdfBox rect={drawRect}>
+                        <CanvasDrawing
+                          width={drawRect.width}
+                          height={drawRect.height}
+                          onSave={(content) => updateIdea(index, { mode: 'draw', content })}
+                          initialData={drawing}
+                          showClearButton
+                          containerClassName="space-y-0"
+                          canvasClassName="bg-transparent"
+                          exportWithWhiteBackground
+                        />
+                      </PdfBox>
+
+                      <PdfInputField
+                        rect={{ ...slot.title, y: slot.id <= 3 ? slot.title.y + 12 : slot.title.y + 10, height: 28 }}
+                        value={title}
+                        onChangeAction={(value) => updateIdeaTitle(index, value)}
+                        fontSize={slot.titleFontSize}
+                        align="center"
+                        padding={6}
+                        placeholder=""
+                      />
+                    </React.Fragment>
+                  );
+                })}
+              </PdfPage>
+            ),
+          },
+        ]}
       />
-
-      {/* Hero characters - Large and visible */}
-      <div className="flex justify-center items-center gap-6 md:gap-10 mb-6">
-        <motion.div 
-          className="flex flex-col items-center"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-        >
-          <div className="w-36 h-36 md:w-52 md:h-52 relative">
-            <Image src="/images/blackpantherlogo.png" alt="Black Panther" fill className="object-contain drop-shadow-2xl" />
-          </div>
-          <span className="text-xs font-bold text-hero-panther mt-1">Black Panther</span>
-        </motion.div>
-
-        {/* Supporting characters */}
-        {[
-          { src: '/images/hulk.png', size: 'w-14 h-14 md:w-20 md:h-20' },
-          { src: '/images/ironman.png', size: 'w-14 h-14 md:w-20 md:h-20' },
-          { src: '/images/spike.png', size: 'w-12 h-12 md:w-16 md:h-16' },
-        ].map((char, i) => (
-          <motion.div 
-            key={i}
-            className={`relative ${char.size}`}
-            animate={{ y: [0, -6, 0], rotate: i % 2 === 0 ? [0, 5, 0] : [0, -5, 0] }}
-            transition={{ duration: 2 + i * 0.3, repeat: Infinity }}
-          >
-            <Image src={char.src} alt="Hero" fill className="object-contain drop-shadow-lg" />
-          </motion.div>
-        ))}
-
-        <motion.div 
-          className="flex flex-col items-center"
-          animate={{ y: [0, -8, 0], rotate: [-3, 3, -3] }}
-          transition={{ duration: 2.8, repeat: Infinity }}
-        >
-          <div className="flex gap-1">
-            <div className="w-24 h-24 md:w-36 md:h-36 relative">
-              <Image src="/images/tom.png" alt="Tom" fill className="object-contain drop-shadow-lg" />
-            </div>
-            <div className="w-24 h-24 md:w-36 md:h-36 relative">
-              <Image src="/images/jerry.png" alt="Jerry" fill className="object-contain drop-shadow-lg" />
-            </div>
-          </div>
-          <span className="text-xs font-bold text-hero-jerry mt-1">Tom & Jerry</span>
-        </motion.div>
-      </div>
-
-      {/* Title prompt */}
-      <motion.div className="text-center mb-6">
-        <p className="text-lg md:text-xl font-black text-hero-panther-purple">
-          Come up with <span className="text-sns-orange">6 wild ideas</span>! Be CRAZY!
-        </p>
-      </motion.div>
-
-      <div className="space-y-5">
-        {/* Ideas Grid - Colorful numbered boxes */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {step3.ideas.map((idea, index) => {
-            const colors = [
-              { bg: 'from-hero-panther-purple/10', border: '#9C27B0', accent: '#9C27B0' },
-              { bg: 'from-hero-jerry/15', border: '#A1887F', accent: '#A1887F' },
-              { bg: 'from-sns-orange/10', border: '#F37021', accent: '#F37021' },
-              { bg: 'from-hero-hulk/10', border: '#4CAF50', accent: '#4CAF50' },
-              { bg: 'from-hero-startup/15', border: '#FFEB3B', accent: '#D4A000' },
-              { bg: 'from-hero-spidey/10', border: '#E23636', accent: '#E23636' },
-            ];
-            const color = colors[index];
-            
-            return (
-              <motion.div
-                key={idea.id}
-                className={`p-4 bg-gradient-to-br ${color.bg} to-white rounded-2xl border-3 shadow-lg`}
-                style={{ borderColor: color.border, borderWidth: '3px' }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.08 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div 
-                  className="text-center mb-2 text-lg font-black"
-                  style={{ color: color.accent }}
-                >
-                  Idea #{idea.id}
-                </div>
-                <DrawingBox
-                  ideaNumber={idea.id}
-                  mode={idea.mode}
-                  content={idea.content}
-                  onModeChange={(mode) => handleIdeaChange(index, mode, idea.content)}
-                  onContentChange={(content) => handleIdeaChange(index, idea.mode, content)}
-                />
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Encouragement box */}
-        <motion.div 
-          className="p-4 bg-gradient-to-r from-hero-panther/10 via-hero-panther-purple/10 to-hero-jerry/10 rounded-2xl border-3 border-dashed border-hero-panther-purple/40 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <p className="text-lg font-black text-hero-panther-purple">
-            No idea is too wild! The crazier the better!
-          </p>
-        </motion.div>
-      </div>
-
-      <PageFooter prevLink="/step2" nextLink="/step4" />
-    </PlaybookPage>
+    </AppShell>
   );
 }

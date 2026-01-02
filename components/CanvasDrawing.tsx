@@ -1,12 +1,16 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 interface CanvasDrawingProps {
   width?: number;
   height?: number;
   onSave: (dataURL: string) => void;
   initialData?: string;
+  showClearButton?: boolean;
+  canvasClassName?: string;
+  containerClassName?: string;
+  exportWithWhiteBackground?: boolean;
 }
 
 export default function CanvasDrawing({
@@ -14,97 +18,147 @@ export default function CanvasDrawing({
   height = 300,
   onSave,
   initialData,
+  showClearButton = true,
+  canvasClassName = '',
+  containerClassName = '',
+  exportWithWhiteBackground = true,
 }: CanvasDrawingProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const isDrawingRef = useRef(false);
+  const [isReady, setIsReady] = useState(false);
+
+  const dpr = useMemo(() => {
+    if (typeof window === 'undefined') return 1;
+    return Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Ensure CSS size matches our logical coordinate system.
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    // Scale the backing store for crispness and correct pointer math on HiDPI screens.
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    setContext(ctx);
+    // Draw in logical (CSS pixel) coordinates.
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctxRef.current = ctx;
+    setIsReady(true);
+
+    // Default: keep canvas transparent so the PDF background shows through.
+    // We still export with a white background for reliable PDF cropping.
+    ctx.clearRect(0, 0, width, height);
 
     if (initialData) {
       const img = new Image();
       img.onload = () => {
-        ctx.drawImage(img, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
       };
       img.src = initialData;
-    } else {
-      ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, width, height);
     }
-  }, [initialData, width, height]);
+  }, [initialData, width, height, dpr]);
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-    if (!context) return;
-    setIsDrawing(true);
+  const getPoint = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
 
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-    const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
-
-    context.beginPath();
-    context.moveTo(x, y);
+    // Map from current (potentially CSS-transformed) box to our logical coordinate system.
+    const scaleX = width / rect.width;
+    const scaleY = height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    return { x, y };
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !context) return;
+  const startDrawing = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+    const p = getPoint(e);
+    if (!p) return;
 
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    isDrawingRef.current = true;
+    (e.currentTarget as HTMLCanvasElement).setPointerCapture(e.pointerId);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  };
 
-    const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-    const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+  const draw = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const ctx = ctxRef.current;
+    if (!isDrawingRef.current || !ctx) return;
+    const p = getPoint(e);
+    if (!p) return;
 
-    context.lineTo(x, y);
-    context.strokeStyle = '#222222';
-    context.lineWidth = 2;
-    context.lineCap = 'round';
-    context.stroke();
+    ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = '#222222';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.stroke();
   };
 
   const stopDrawing = () => {
-    setIsDrawing(false);
-    if (canvasRef.current) {
-      onSave(canvasRef.current.toDataURL());
+    isDrawingRef.current = false;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    if (!exportWithWhiteBackground) {
+      onSave(canvas.toDataURL());
+      return;
     }
+
+    const tmp = document.createElement('canvas');
+    tmp.width = canvas.width;
+    tmp.height = canvas.height;
+    const tctx = tmp.getContext('2d');
+    if (!tctx) {
+      onSave(canvas.toDataURL());
+      return;
+    }
+    tctx.fillStyle = 'white';
+    tctx.fillRect(0, 0, tmp.width, tmp.height);
+    tctx.drawImage(canvas, 0, 0);
+    onSave(tmp.toDataURL());
   };
 
   const clearCanvas = () => {
-    if (!context) return;
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, width, height);
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+    ctx.clearRect(0, 0, width, height);
     onSave('');
   };
 
   return (
-    <div className="space-y-2">
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={stopDrawing}
-        onMouseLeave={stopDrawing}
-        onTouchStart={startDrawing}
-        onTouchMove={draw}
-        onTouchEnd={stopDrawing}
-        className="border-2 border-gray-300 rounded-lg cursor-crosshair bg-white touch-none"
-      />
-      <button
-        onClick={clearCanvas}
-        className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
-      >
-        Clear Drawing
-      </button>
+    <div className={containerClassName}>
+      <div className="relative">
+        <canvas
+          ref={canvasRef}
+          onPointerDown={startDrawing}
+          onPointerMove={draw}
+          onPointerUp={stopDrawing}
+          onPointerCancel={stopDrawing}
+          onPointerLeave={stopDrawing}
+          className={`block cursor-crosshair touch-none select-none ${canvasClassName}`}
+        />
+        {showClearButton ? (
+          <button
+            type="button"
+            onClick={clearCanvas}
+            className="absolute top-2 right-2 rounded-md border border-gray-200 bg-white/80 px-2 py-1 text-xs text-gray-700 backdrop-blur hover:bg-white"
+          >
+            Clear
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 }

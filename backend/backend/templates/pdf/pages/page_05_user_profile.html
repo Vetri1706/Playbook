@@ -1,0 +1,28 @@
+<!-- Page 5 -->
+<div class="page" id="page-5">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_05.png') }}" alt="Page 5 Background">
+    </div>
+    <div class="page-content">
+        <!-- user_profile_image -->
+        <div class="image-block content-block {% if not images.user_profile_image %}missing-data{% endif %}"
+             data-field-name="user_profile_image"
+             style="top: 2.78in; left: 2.78in; width: 2.78in; height: 2.78in;">
+            {% if images.user_profile_image %}
+            <img src="{{ url_for('static', filename='uploads/' + images.user_profile_image) }}" alt="user_profile_image">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- user_profile_description -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.user_profile_description %}missing-data{% endif %}"
+             data-field-name="user_profile_description"
+             style="top: 5.83in; left: 0.69in; width: 6.94in; height: 1.39in; line-height: 1.4;">
+            {{ data.user_profile_description or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

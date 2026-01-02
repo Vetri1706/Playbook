@@ -1,0 +1,15 @@
+<!-- Page 7 -->
+<div class="page" id="page-7">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_07.png') }}" alt="Page 7 Background">
+    </div>
+    <div class="page-content">
+        <!-- product_statement -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.product_statement %}missing-data{% endif %}"
+             data-field-name="product_statement"
+             style="top: 4.86in; left: 0.69in; width: 6.94in; height: 1.11in; line-height: 1.4;">
+            {{ data.product_statement or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

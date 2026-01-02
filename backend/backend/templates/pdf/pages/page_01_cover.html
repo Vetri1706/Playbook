@@ -1,0 +1,15 @@
+<!-- Page 1 -->
+<div class="page" id="page-1">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_01.png') }}" alt="Page 1 Background">
+    </div>
+    <div class="page-content">
+        <!-- student_name -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.student_name %}missing-data{% endif %}"
+             data-field-name="student_name"
+             style="top: 5.56in; left: 2.78in; width: 4.17in; height: 0.42in;">
+            {{ data.student_name or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

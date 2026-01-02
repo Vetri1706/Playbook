@@ -1,0 +1,21 @@
+[Unit]
+Description=Design Thinking Playbook Frontend (Next.js)
+After=network.target
+
+[Service]
+Type=simple
+User=dtplaybook
+Group=dtplaybook
+WorkingDirectory=/home/dtplaybook/appp
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+# IMPORTANT: keep frontend and backend same-origin via nginx
+Environment="NEXT_PUBLIC_BACKEND_URL=https://your-domain.com"
+
+# If you built with output: 'standalone', start the standalone server:
+ExecStart=/usr/bin/node .next/standalone/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

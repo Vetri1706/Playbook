@@ -1,0 +1,15 @@
+
+> sns-playbook@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.8:3000
+
+ ✓ Starting...
+ ✓ Ready in 2s
+ ○ Compiling /step1 ...
+ ✓ Compiled /step1 in 2.1s (1397 modules)
+ GET /step1 200 in 2545ms
+ ✓ Compiled in 241ms (635 modules)
+Terminate batch job (Y/N)? [?25h

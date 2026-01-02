@@ -1,0 +1,28 @@
+<!-- Page 12 -->
+<div class="page" id="page-12">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_12.png') }}" alt="Page 12 Background">
+    </div>
+    <div class="page-content">
+        <!-- final_message -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.final_message %}missing-data{% endif %}"
+             data-field-name="final_message"
+             style="top: 5.56in; left: 0.69in; width: 6.94in; height: 2.08in; line-height: 1.4;">
+            {{ data.final_message or '[Not provided]' }}
+        </div>
+
+        <!-- student_signature -->
+        <div class="image-block content-block {% if not images.student_signature %}missing-data{% endif %}"
+             data-field-name="student_signature"
+             style="top: 7.22in; left: 5.56in; width: 2.08in; height: 0.69in;">
+            {% if images.student_signature %}
+            <img src="{{ url_for('static', filename='uploads/' + images.student_signature) }}" alt="student_signature">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>

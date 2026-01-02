@@ -1,0 +1,23 @@
+[Unit]
+Description=Design Thinking Playbook Backend (Flask + Gunicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=dtplaybook
+Group=dtplaybook
+WorkingDirectory=/home/dtplaybook/appp/backend/backend
+Environment="FLASK_ENV=production"
+Environment="BIND=127.0.0.1:8000"
+Environment="LOG_LEVEL=info"
+# Set these as appropriate:
+# Environment="SECRET_KEY=change-me"
+# Environment="JWT_SECRET_KEY=change-me"
+# Environment="CORS_ORIGINS=https://your-domain.com"
+
+ExecStart=/home/dtplaybook/appp/backend/backend/venv/bin/gunicorn -c gunicorn.conf.py app:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

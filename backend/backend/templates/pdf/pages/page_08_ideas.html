@@ -1,0 +1,128 @@
+<!-- Page 8 -->
+<div class="page" id="page-8">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_08.png') }}" alt="Page 8 Background">
+    </div>
+    <div class="page-content">
+        <!-- idea_1_drawing -->
+        <div class="image-block content-block {% if not images.idea_1_drawing %}missing-data{% endif %}"
+             data-field-name="idea_1_drawing"
+             style="top: 2.78in; left: 0.69in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_1_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_1_drawing) }}" alt="idea_1_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_1_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_1_title %}missing-data{% endif %}"
+             data-field-name="idea_1_title"
+             style="top: 4.58in; left: 0.69in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_1_title or '[Not provided]' }}
+        </div>
+
+        <!-- idea_2_drawing -->
+        <div class="image-block content-block {% if not images.idea_2_drawing %}missing-data{% endif %}"
+             data-field-name="idea_2_drawing"
+             style="top: 2.78in; left: 3.06in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_2_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_2_drawing) }}" alt="idea_2_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_2_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_2_title %}missing-data{% endif %}"
+             data-field-name="idea_2_title"
+             style="top: 4.58in; left: 3.06in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_2_title or '[Not provided]' }}
+        </div>
+
+        <!-- idea_3_drawing -->
+        <div class="image-block content-block {% if not images.idea_3_drawing %}missing-data{% endif %}"
+             data-field-name="idea_3_drawing"
+             style="top: 2.78in; left: 5.42in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_3_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_3_drawing) }}" alt="idea_3_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_3_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_3_title %}missing-data{% endif %}"
+             data-field-name="idea_3_title"
+             style="top: 4.58in; left: 5.42in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_3_title or '[Not provided]' }}
+        </div>
+
+        <!-- idea_4_drawing -->
+        <div class="image-block content-block {% if not images.idea_4_drawing %}missing-data{% endif %}"
+             data-field-name="idea_4_drawing"
+             style="top: 5.28in; left: 0.69in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_4_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_4_drawing) }}" alt="idea_4_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_4_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_4_title %}missing-data{% endif %}"
+             data-field-name="idea_4_title"
+             style="top: 7.08in; left: 0.69in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_4_title or '[Not provided]' }}
+        </div>
+
+        <!-- idea_5_drawing -->
+        <div class="image-block content-block {% if not images.idea_5_drawing %}missing-data{% endif %}"
+             data-field-name="idea_5_drawing"
+             style="top: 5.28in; left: 3.06in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_5_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_5_drawing) }}" alt="idea_5_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_5_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_5_title %}missing-data{% endif %}"
+             data-field-name="idea_5_title"
+             style="top: 7.08in; left: 3.06in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_5_title or '[Not provided]' }}
+        </div>
+
+        <!-- idea_6_drawing -->
+        <div class="image-block content-block {% if not images.idea_6_drawing %}missing-data{% endif %}"
+             data-field-name="idea_6_drawing"
+             style="top: 5.28in; left: 5.42in; width: 2.08in; height: 1.67in;">
+            {% if images.idea_6_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.idea_6_drawing) }}" alt="idea_6_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- idea_6_title -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'single-line', 'text-small']) }} {% if not data.idea_6_title %}missing-data{% endif %}"
+             data-field-name="idea_6_title"
+             style="top: 7.08in; left: 5.42in; width: 2.08in; height: 0.28in;">
+            {{ data.idea_6_title or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

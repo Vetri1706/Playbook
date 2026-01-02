@@ -56,8 +56,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .animate-rainbow {
-  background-size: 200% 200%;
-  animation: rainbow 5s ease infinite;
+  background-size: 400% 400%;
+  animation: rainbow 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rainbow {
+    animation: none;
+  }
+}
+
+.bg-rainbow {
+  background-image: linear-gradient(
+    135deg,
+    #E23636 0%,
+    #F37021 20%,
+    #FFEB3B 40%,
+    #00A651 60%,
+    #0476F2 80%,
+    #673ab7 100%
+  );
 }
 
 .animate-sparkle {

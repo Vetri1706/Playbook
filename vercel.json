@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://YOUR-BACKEND-DOMAIN.com/api/$1"
+    },
+    {
+      "source": "/static/(.*)",
+      "destination": "https://YOUR-BACKEND-DOMAIN.com/static/$1"
+    }
+  ]
+}

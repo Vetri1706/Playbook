@@ -1,0 +1,40 @@
+# PDF Generation Backend Requirements
+# Python 3.9+
+
+# PDF Processing (using binary wheels for Windows compatibility)
+# PyMuPDF newer versions support Python 3.13
+PyMuPDF>=1.24.10  # Will auto-install from binary wheel
+Pillow==10.1.0
+# Pillow 12.x supports Python 3.13 wheels
+Pillow>=11.0.0
+reportlab==4.0.7
+
+# Web Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+
+# Database
+# Python 3.13 compatibility requires SQLAlchemy 2.0.34+
+# Pin to a recent 2.x that supports 3.13
+SQLAlchemy>=2.0.36,<3.0
+psycopg2-binary==2.9.9  # PostgreSQL support
+
+# Security & Authentication
+PyJWT==2.8.0
+python-dotenv==1.0.0
+bcrypt==4.1.2
+
+# Utilities
+python-dateutil==2.8.2
+requests==2.31.0
+
+# Production & Deployment
+gunicorn==21.2.0
+Flask-Limiter==3.5.0  # Rate limiting
+
+# Development
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.1
+flake8==6.1.0

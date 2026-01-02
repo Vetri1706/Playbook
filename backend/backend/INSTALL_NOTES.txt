@@ -1,0 +1,129 @@
+===========================================
+PyMuPDF INSTALLATION TROUBLESHOOTING
+===========================================
+
+PROBLEM: PyMuPDF fails to install with "Unable to find Visual Studio" error
+
+ROOT CAUSE: You're using Python 3.13, which doesn't have pre-compiled PyMuPDF wheels yet.
+PyMuPDF needs to be compiled from source for Python 3.13, which requires Visual Studio.
+
+===========================================
+SOLUTION OPTIONS (Choose ONE)
+===========================================
+
+✅ OPTION 1: USE PYTHON 3.11 or 3.12 (RECOMMENDED - EASIEST)
+-------------------------------------------
+
+1. Download Python 3.11 or 3.12 from:
+   https://www.python.org/downloads/
+
+2. Install it (make sure to check "Add Python to PATH")
+
+3. Create a new virtual environment with this version:
+   ```
+   # Use py launcher to select specific version
+   py -3.11 -m venv venv
+   
+   # OR if you installed it as default:
+   python -m venv venv
+   ```
+
+4. Activate and install:
+   ```
+   .\venv\Scripts\Activate.ps1
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+===========================================
+
+✅ OPTION 2: USE CONDA/MAMBA (RECOMMENDED - MOST RELIABLE)
+-------------------------------------------
+
+Conda provides pre-built packages that don't require compilation.
+
+1. Install Miniforge from:
+   https://github.com/conda-forge/miniforge
+
+2. Open Miniforge Prompt and run:
+   ```
+   conda create -n dt-backend python=3.11
+   conda activate dt-backend
+   cd "D:\dt playbook\design-thinking-playbook-website\backend"
+   pip install -r requirements.txt
+   ```
+
+===========================================
+
+✅ OPTION 3: INSTALL WITHOUT PyMuPDF (TEST OTHER FEATURES)
+-------------------------------------------
+
+If you just want to test the API structure without PDF generation:
+
+1. Install minimal requirements:
+   ```
+   pip install -r requirements-minimal.txt
+   ```
+
+2. Comment out PyMuPDF import in code temporarily:
+   ```python
+   # In services/pdf_generator.py
+   # import fitz  # PyMuPDF
+   ```
+
+===========================================
+
+✅ OPTION 4: INSTALL VISUAL STUDIO BUILD TOOLS (ADVANCED)
+-------------------------------------------
+
+Only if you must use Python 3.13:
+
+1. Download Visual Studio Build Tools:
+   https://visualstudio.microsoft.com/downloads/
+   (Scroll down to "Tools for Visual Studio" → "Build Tools for Visual Studio 2022")
+
+2. Run installer and select:
+   - "Desktop development with C++"
+   - Make sure "MSVC v143" and "Windows 10/11 SDK" are checked
+
+3. Restart your computer
+
+4. Try installation again:
+   ```
+   pip install PyMuPDF
+   ```
+
+⚠️ This download is ~6GB and takes time!
+
+===========================================
+
+✅ OPTION 5: USE PRE-BUILT WHEEL (IF AVAILABLE)
+-------------------------------------------
+
+Check if someone has built a wheel for Python 3.13:
+https://github.com/pymupdf/PyMuPDF/releases
+
+Download the .whl file matching your system:
+- cp313 = Python 3.13
+- win_amd64 = 64-bit Windows
+
+Install it:
+```
+pip install path\to\downloaded\PyMuPDF-1.23.8-cp313-cp313-win_amd64.whl
+```
+
+===========================================
+
+VERIFICATION:
+After successful installation, test it:
+
+```python
+python -c "import fitz; print(fitz.__doc__)"
+```
+
+If you see PyMuPDF documentation, it's working! ✓
+
+===========================================
+
+RECOMMENDED: Option 1 (Python 3.11) or Option 2 (Conda)
+Both are quick and reliable solutions.

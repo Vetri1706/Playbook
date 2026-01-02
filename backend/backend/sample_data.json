@@ -1,0 +1,30 @@
+{
+  "responses": {
+    "problem_statement": "Students struggle to stay focused during online classes",
+    "target_audience": "High school students aged 14-17",
+    "pain_points": "Distractions, fatigue, lack of engagement",
+    "interview_question_1": "What makes it hard to focus in online classes?",
+    "interview_question_2": "What would help you stay engaged?",
+    "interview_question_3": "How do you currently manage distractions?",
+    "user_name": "Alex Chen",
+    "user_age": "16",
+    "user_description": "Tech-savvy high school student who takes 6 online classes daily",
+    "sad_space_current": "Constant notifications, no dedicated study space, eye strain from screens",
+    "happy_space_ideal": "Quiet environment, ergonomic desk, gamified learning system",
+    "product_statement": "My product will help high school students stay focused during online classes by providing distraction-blocking features and engagement rewards",
+    "idea_1": "Browser extension that blocks social media during class",
+    "idea_2": "AI study buddy that tracks attention and gives breaks",
+    "idea_3": "Gamified quiz system with leaderboards",
+    "idea_4": "Virtual study room with peer accountability",
+    "idea_5": "Focus timer with achievement badges",
+    "idea_6": "Parent dashboard showing study progress",
+    "best_idea": "AI study buddy with distraction blocking and break reminders",
+    "validation_criteria": "Increases focus time by 40%, reduces distractions by 60%, positive user feedback from 80% of testers",
+    "prototype_description": "Mobile app with AI attention tracking, smart break scheduler, and achievement system",
+    "innovation_tech": "Machine learning for attention detection, cross-platform sync",
+    "innovation_market": "Targeting 50M online students globally, freemium model",
+    "innovation_user": "Student-centric design, peer recommendations",
+    "final_reflection": "This journey taught me to focus on real user problems instead of technology first"
+  },
+  "images": {}
+}

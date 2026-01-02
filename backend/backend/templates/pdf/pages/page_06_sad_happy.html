@@ -1,0 +1,48 @@
+<!-- Page 6 -->
+<div class="page" id="page-6">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_06.png') }}" alt="Page 6 Background">
+    </div>
+    <div class="page-content">
+        <!-- sad_space_description -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.sad_space_description %}missing-data{% endif %}"
+             data-field-name="sad_space_description"
+             style="top: 2.78in; left: 0.69in; width: 3.33in; height: 2.08in; line-height: 1.4;">
+            {{ data.sad_space_description or '[Not provided]' }}
+        </div>
+
+        <!-- sad_space_drawing -->
+        <div class="image-block content-block {% if not images.sad_space_drawing %}missing-data{% endif %}"
+             data-field-name="sad_space_drawing"
+             style="top: 5.00in; left: 0.69in; width: 3.33in; height: 2.78in;">
+            {% if images.sad_space_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.sad_space_drawing) }}" alt="sad_space_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- happy_space_description -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.happy_space_description %}missing-data{% endif %}"
+             data-field-name="happy_space_description"
+             style="top: 2.78in; left: 4.31in; width: 3.33in; height: 2.08in; line-height: 1.4;">
+            {{ data.happy_space_description or '[Not provided]' }}
+        </div>
+
+        <!-- happy_space_drawing -->
+        <div class="image-block content-block {% if not images.happy_space_drawing %}missing-data{% endif %}"
+             data-field-name="happy_space_drawing"
+             style="top: 5.00in; left: 4.31in; width: 3.33in; height: 2.78in;">
+            {% if images.happy_space_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.happy_space_drawing) }}" alt="happy_space_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- Page 10 -->
+<div class="page" id="page-10">
+    <div class="page-background">
+        <img src="{{ url_for('static', filename='pdf_backgrounds/page_10.png') }}" alt="Page 10 Background">
+    </div>
+    <div class="page-content">
+        <!-- prototype_drawing -->
+        <div class="image-block content-block {% if not images.prototype_drawing %}missing-data{% endif %}"
+             data-field-name="prototype_drawing"
+             style="top: 2.78in; left: 0.69in; width: 6.94in; height: 4.86in;">
+            {% if images.prototype_drawing %}
+            <img src="{{ url_for('static', filename='uploads/' + images.prototype_drawing) }}" alt="prototype_drawing">
+            {% else %}
+            <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                [Image Not Provided]
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- prototype_description -->
+        <div class="{{ ' '.join(['content-block', 'text-block', 'multi-line', 'text-small']) }} {% if not data.prototype_description %}missing-data{% endif %}"
+             data-field-name="prototype_description"
+             style="top: 6.67in; left: 0.69in; width: 6.94in; height: 1.11in; line-height: 1.4;">
+            {{ data.prototype_description or '[Not provided]' }}
+        </div>
+
+    </div>
+</div>

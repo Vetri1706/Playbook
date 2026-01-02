@@ -1,0 +1,42 @@
+# Alternative Requirements (if main requirements.txt fails on Windows)
+# Use this if you have Python 3.13 or encounter PyMuPDF compilation issues
+
+# Core dependencies (install these first)
+pip>=25.3
+setuptools>=70.0.0
+wheel>=0.44.0
+
+# Web Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+
+# Database
+# Python 3.13 compatibility requires SQLAlchemy 2.0.34+
+SQLAlchemy>=2.0.36,<3.0
+
+# For SQLite (included in Python)
+# For PostgreSQL (optional - uncomment if needed):
+# psycopg2-binary==2.9.9
+
+# Security & Authentication
+PyJWT==2.8.0
+python-dotenv==1.0.0
+bcrypt==4.1.2
+
+# Image Processing
+Pillow==10.1.0
+
+# Utilities
+python-dateutil==2.8.2
+requests==2.31.0
+
+# PDF Processing - Install separately after other packages
+# For PyMuPDF issues, see INSTALL_NOTES.txt
+# PyMuPDF==1.23.8  # Uncomment after fixing Python version
+
+# Development
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.1
+flake8==6.1.0

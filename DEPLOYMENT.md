@@ -43,6 +43,8 @@
 
 ### Option 1: Vercel (Recommended for Next.js)
 
+This project uses a Flask backend for PDF generation + serving template page PNGs. Vercel hosts the **frontend** only, so deploy the backend separately (Render/Railway/Fly/VPS) and then connect it.
+
 **Steps:**
 
 1. Push code to GitHub
@@ -56,10 +58,15 @@
    ```
 
 2. Deploy to Vercel
+
    - Go to [vercel.com](https://vercel.com)
    - Click "Import Project"
    - Select your GitHub repo
    - Click "Deploy"
+
+3. Connect the backend
+   - Recommended: update [vercel.json](vercel.json) to rewrite `/api/*` and `/static/*` to your backend domain.
+   - Alternative: set `NEXT_PUBLIC_BACKEND_URL` in Vercel env vars.
 
 **Or use Vercel CLI:**
 
@@ -118,7 +125,17 @@ npm start
 
 ## Environment Variables
 
-Currently, no environment variables needed.
+Frontend (Vercel):
+
+- Optional `NEXT_PUBLIC_BACKEND_URL` (set only if you are NOT using `vercel.json` rewrites)
+- Optional `NEXT_PUBLIC_PDF_API_KEY` (only if backend expects `X-API-Key`)
+
+Backend (where you host Flask):
+
+- `FLASK_ENV=production`
+- `SECRET_KEY=...`
+- `JWT_SECRET_KEY=...`
+- `PDF_TEMPLATE_PATH=...`
 
 If adding features later:
 
